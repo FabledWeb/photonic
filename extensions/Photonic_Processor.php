@@ -377,12 +377,23 @@ abstract class Photonic_Processor {
 		}
 
 		$counter = 0;
-		global $photonic_gallery_panel_items, $photonic_slideshow_library;
+		global $photonic_gallery_panel_items, $photonic_slideshow_library, $photonic_extract_link_from_title;
 		foreach ($photos as $photo) {
 			$counter++;
 			$thumb = $photo['thumbnail'];
 			$orig = $photo['main_image'];
 			$url = $photo['main_page'];
+
+			if (!empty($photonic_extract_link_from_title)) {
+				$urlregex = '~(?:https?)://[a-z0-9+$_-]+(?:\\.[a-z0-9+$_-]+)*' .
+					'(?:/(?:[a-z0-9+$_-]\\.?)+)*/?(?:\\?[a-z+&$_.-][a-z0-9;:@/&%=+$_.-]*)?'.
+					'(?:#[a-z_.-][a-z0-9+$_.-]*)?~i';
+				if (preg_match($urlregex, $photo['title'], $matches)) {
+					$url = $matches[0];
+					$photo['title'] = str_replace($url, " ", $photo['title']);
+				}
+			}
+
 			$title = esc_attr($photo['title']);
 			$alt = esc_attr($photo['alt_title']);
 			$orig = ($this->library == 'none' || !$show_lightbox) ? $url : $orig;

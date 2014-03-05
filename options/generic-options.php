@@ -102,6 +102,14 @@ $photonic_generic_options = array(
 		"std" => ""
 	),
 
+	array("name" => "Extract Link From Title",
+		"desc" => "Extract links from the title/description of your photo to use as the link for your photo (allows linking photos to product pages on other sites for example)",
+		"id" => "extract_link_from_title",
+		"grouping" => "generic-settings",
+		"type" => "checkbox",
+		"std" => ""
+	),
+
 	array("name" => "Default Gallery Type",
 		"desc" => "If no gallery type is specified, the following selection will be used:",
 		"id" => "default_gallery_type",

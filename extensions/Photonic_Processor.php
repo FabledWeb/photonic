@@ -377,7 +377,7 @@ abstract class Photonic_Processor {
 		}
 
 		$counter = 0;
-		global $photonic_gallery_panel_items, $photonic_slideshow_library, $photonic_extract_link_from_title;
+		global $photonic_gallery_panel_items, $photonic_slideshow_library, $photonic_extract_link_from_title, $photonic_utm_source, $photonic_utm_medium, $photonic_utm_campaign;
 		foreach ($photos as $photo) {
 			$counter++;
 			$thumb = $photo['thumbnail'];
@@ -393,6 +393,11 @@ abstract class Photonic_Processor {
 					$photo['title'] = str_replace($url, " ", $photo['title']);
 				}
 			}
+      $photo['title'] = trim($photo['title']);
+      if($url && $photonic_utm_source && strpos($url, 'utm_') === false) {
+        $sep = (strpos($url, '#') === false) ? '#' : '&';
+        $url = $url . $sep . 'utm_source='.urlencode($photonic_utm_source).'&utm_medium='.urlencode($photonic_utm_medium).'&utm_campaign='.urlencode($photonic_utm_campaign).'&utm_term='.urlencode($photo['title']);
+      }
 
 			$title = esc_attr($photo['title']);
 			$alt = esc_attr($photo['alt_title']);

@@ -366,7 +366,8 @@ abstract class Photonic_Processor {
 			$ul_class = "class='slideshow-grid-panel lib-{$this->library} title-display-$title_position'";
 		}
 
-		$ret = "<ul $ul_class>";
+		//$ret = "<ul $ul_class>";
+    $ret= '<div class="row">';
 
 		global $photonic_external_links_in_new_tab;
 		if (!empty($photonic_external_links_in_new_tab)) {
@@ -408,7 +409,8 @@ abstract class Photonic_Processor {
 				$shown_title = '<span class="photonic-photo-title">'.wp_specialchars_decode($alt, ENT_QUOTES).'</span>';
 			}
 			if ($display == 'in-page') {
-				$ret .= "\n\t".'<li class="photonic-'.$this->provider.'-image photonic-'.$this->provider.'-'.$type.' '.$col_class.'">';
+				//$ret .= "\n\t".'<li class="photonic-'.$this->provider.'-image photonic-'.$this->provider.'-'.$type.' '.$col_class.'">';
+				$ret .= "\n\t".'<div class="col-xs-6 col-sm-3 col-md-3 col-lg-2 text-center photo-holder">';
 			}
 			else if ($counter % $photonic_gallery_panel_items == 1 && $display != 'in-page') {
 				$ret .= "\n\t".'<li class="photonic-'.$this->provider.'-image photonic-'.$this->provider.'-'.$type.'">';
@@ -421,7 +423,8 @@ abstract class Photonic_Processor {
 			$title_link_start = ($this->link_lightbox_title && $photonic_slideshow_library != 'thickbox') ? esc_attr("<a href='$url' $target>") : '';
 			$title_link_end = ($this->link_lightbox_title && $photonic_slideshow_library != 'thickbox') ? esc_attr("</a>") : '';
 			if ($display == 'in-page') {
-				$ret .= '<a '.$link_attributes.' href="'.$orig.'" title="'.$title_link_start.$title.$title_link_end.'" '.$target.'><img alt="'.$alt.'" src="'.$thumb.'" '.$style.'/></a>'.$shown_title;
+				//$ret .= '<a '.$link_attributes.' href="'.$orig.'" title="'.$title_link_start.$title.$title_link_end.'" '.$target.'><img alt="'.$alt.'" src="'.$thumb.'" '.$style.'/></a>'.$shown_title;
+				$ret .= '<a '.$link_attributes.' href="'.$orig.'" title="'.$title_link_start.$title.$title_link_end.'" '.$target.' style="background-image:url('.$thumb.')"><img class="hidden" alt="'.$alt.'" src="'.$thumb.'" '.$style.'/></a>'.$shown_title;
 			}
 			else {
 				$ret .= '<a '.$link_attributes.' href="'.$orig.'" title="'.$title_link_start.$title.$title_link_end.'" '.$target.'><img alt="'.$alt.'" src="'.$thumb.'" '.$style.'/>'.$shown_title.'</a>';
@@ -442,14 +445,17 @@ abstract class Photonic_Processor {
 				$ret .= $password_prompt;
 			}*/
 			if ($display == 'in-page' || ($counter % $photonic_gallery_panel_items == 0 && $display != 'in-page')) {
-				$ret .= "</li>";
+				//$ret .= "</li>";
+				$ret .= "</div>";
 			}
 		}
-		if ($ret != "<ul $ul_class>") {
+		//if ($ret != "<ul $ul_class>") {
+		if ($ret != "<div class=\"row\">") {
 			if (substr($ret, -5) != "</li>") {
 				$ret .= "</li>";
 			}
-			$ret .= "\n</ul>\n";
+			//$ret .= "\n</ul>\n";
+      $ret .= "\n</div>\n";
 
 			if (!empty($pagination) && !empty($pagination['paginate'])) {
 				// Show "Load more" button
